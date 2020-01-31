@@ -1,0 +1,6 @@
+<ng-container *ngFor="let p of products; let i = index">
+	<div class="col-md-6 col-xs-6" >
+		<app-product-card [product]="p" [index]="i"></app-product-card>
+	</div>
+	<div *ngIf="(i + 1)%2 === 0"class="w-100"></div>
+</ng-container>

@@ -1,0 +1,9 @@
+<div *ngIf="product.title" class="card">
+	<img *ngIf="product.imageUrl"class="card-img-top" style="height: 250px" 
+	 src="{{ product.imageUrl }}"
+	 alt="{{ product.title }}">
+	<div class="card-body">
+		<h5 class="card-title">{{product.title}}</h5>
+		<p class="card-text">{{product.price | currency:'INR'}}</p>		
+	</div>
+</div>

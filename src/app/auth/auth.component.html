@@ -1,0 +1,53 @@
+<div class="wrapper fadeInDown row" [ngStyle]="{'margin': signInMode ? '7% 0%' : '0% 0% 2% 0%'}">
+  <ng-template appPlaceholder></ng-template>
+  <div *ngIf="isLoading" style="text-align: center;">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+
+  <div id="formContent" *ngIf="!isLoading">
+    <!-- Tabs Titles -->
+    <h2 [ngClass]="{active : signInMode, inactive : !signInMode, underlineHover: !signInMode}"
+      (click)="signInMode = !signInMode"> Sign In </h2>
+    <h2 [ngClass]="{active : !signInMode, inactive : signInMode, underlineHover: signInMode}"
+      (click)="signInMode = !signInMode">Sign Up </h2>
+
+    <!-- Login Form -->
+    <form #formRef="ngForm" (ngSubmit)="onSubmit(formRef)" autocomplete="off">
+      <input type="text" id="email" placeholder="Email" ngModel name="email" email required />
+
+      <input type="text" *ngIf="!signInMode" id="userName"  placeholder="User Name" ngModel
+        name="userName" required />
+
+      <input type="text" *ngIf="!signInMode" id="contatNumber"  placeholder="Contact Number" ngModel
+        name="contatNumber" required minlength="10" maxlength="10" pattern="[0-9]+" />
+
+      <input type="date" *ngIf="!signInMode" id="dateOfBirth" placeholder="Birth Date" ngModel
+        name="dateOfBirth" required pattern="\d{2}-\d{2}-\d{2}" />
+
+      <input [attr.type]="showPassword ? 'text' : 'password'" id="password"  placeholder="Password"
+        ngModel name="password" required minlength="6" />
+      <br />
+
+      <div>
+        <input type="checkbox" style="width: 10%;" (click)="onShowPassword()">
+        <span>Show Password</span>
+      </div>
+
+
+      <input type="password" *ngIf="!signInMode" id="confirmPassword" 
+        placeholder="Confirm Password" ngModel name="confirmPassword" required />
+
+      <p class="text-danger" *ngIf="formRef.value.password != formRef.value.confirmPassword && !signInMode">
+        Password Mismatch
+      </p>
+
+      <button type="submit" value="Log In" [disabled]="!formRef.valid" [ngStyle]="!formRef.valid?{'background-color': '#212121'} : {'background-color': '#2874f0'}">
+        {{ signInMode ? 'Sign In' : 'Sign Up' }}
+      </button>
+      <br/>
+      <strong>OR</strong>
+      <br/>
+      <a style="cursor: pointer; margin: 10px 15px;" (click)="signInWithGoogle()"><img src="https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png" alt=""></a>
+    </form>
+  </div>
+</div>

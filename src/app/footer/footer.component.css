@@ -1,0 +1,14 @@
+.app-footer{
+	background-color: #172337;
+	color: #fff;
+	padding: 2%;
+}
+
+a{
+	color: #fff;
+	cursor: pointer;
+}
+
+.border-left{
+	min-height: 125px;
+}

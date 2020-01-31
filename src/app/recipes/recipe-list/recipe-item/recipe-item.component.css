@@ -1,0 +1,8 @@
+.list-group-item.active{
+	background-color: #2874f0;
+	margin: 10px 0px;
+}
+
+.list-group-item{
+	margin: 10px 0px;
+}
