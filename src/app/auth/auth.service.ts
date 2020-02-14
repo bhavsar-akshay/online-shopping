@@ -57,7 +57,6 @@ export class AuthService {
       }).pipe(
         catchError(this.errorhandler),
         tap(ResponseData => {
-          console.log(ResponseData);
           this.handleAuthenticate(ResponseData.email, ResponseData.localId, ResponseData.idToken, +ResponseData.expiresIn);
         })
       );
@@ -82,7 +81,6 @@ export class AuthService {
       _token: string,
       _tokenExpirationDate: Date
     } = JSON.parse(localStorage.getItem('userData'));
-console.log(userData);
     if (!userData) {
       return;
     }
@@ -110,7 +108,6 @@ console.log(userData);
       idToken,
       ExpirationDate
       );
-
     this.user.next(user);
     this.autoLogout(expiresIn * 1000);
     localStorage.setItem('userData', JSON.stringify(user));

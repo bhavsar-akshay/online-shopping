@@ -5,7 +5,6 @@ import { Observable, Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AlertBoxComponent } from '../shared/alert-box/alert-box.component';
 import { PlaceholderDirective } from '../shared/placeholder.directive';
-import { UserService } from './user.service';
 
 @Component({
   selector: 'app-auth',
@@ -23,7 +22,7 @@ export class AuthComponent implements OnInit, OnDestroy {
   @ViewChild(PlaceholderDirective, { static: false }) alertHost: PlaceholderDirective;
 
   // tslint:disable-next-line: max-line-length
-  constructor(private authService: AuthService, private router: Router, private componentFactoryResolver: ComponentFactoryResolver, private userService: UserService) { }
+  constructor(private authService: AuthService, private router: Router, private componentFactoryResolver: ComponentFactoryResolver) { }
 
   ngOnInit() {
   }
@@ -40,19 +39,12 @@ export class AuthComponent implements OnInit, OnDestroy {
     this.authService
       .signInWithGoogle()
       .then((res) => {
-        console.log(res);
-        // if (res.additionalUserInfo.isNewUser) {
-        //   this.userService.createUser(res.additionalUserInfo.profile);
-        // }
-        //const returnUrl = this.route.snapshot.queryParamMap.get("returnUrl");
-        //location.reload();
-        //this.authService.user.next('true');
-        //this.authService.handleAuthenticate(res.user.email, res.user.uid, res.user.ma,);
+        this.authService.handleAuthenticate(res.user.email, res.user.uid, res.user.ma, 3600);
         this.router.navigate(['/recipes']);
       })
       .catch((err) => {
-        console.log(err);
-        this.showErrorAlert(err);
+        console.log(err)
+        this.showErrorAlert(err.message);
       });
   }
 
@@ -75,7 +67,6 @@ export class AuthComponent implements OnInit, OnDestroy {
 
     authObj.subscribe(
       ResponseData => {
-        console.log(ResponseData)
         this.isLoading = false;
         this.router.navigate(['/recipes']);
       },
